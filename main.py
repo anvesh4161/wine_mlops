@@ -1,5 +1,6 @@
 from wine_quality import logger
 from wine_quality.pipeline.stage_1_data_ingestion import DataIngestionPipeline
+from wine_quality.pipeline.stage_2_data_validation import DataValidationPipeline
 
 STAGE_NAME = "Data Ingestion Stage"
 
@@ -12,3 +13,16 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e
+
+STAGE_NAME = "Data Validation Stage"
+
+try:
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    data_validation = DataValidationPipeline()
+    data_validation.main()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+
+except Exception as e:
+    logger.exception(e)
+    raise e
+
