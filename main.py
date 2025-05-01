@@ -1,6 +1,9 @@
 from wine_quality import logger
 from wine_quality.pipeline.stage_1_data_ingestion import DataIngestionPipeline
 from wine_quality.pipeline.stage_2_data_validation import DataValidationPipeline
+from wine_quality.pipeline.stage_3_data_transformation import DataTransformation
+from wine_quality. config.configuration import ConfigurationManager
+
 
 STAGE_NAME = "Data Ingestion Stage"
 
@@ -26,3 +29,18 @@ except Exception as e:
     logger.exception(e)
     raise e
 
+STAGE_NAME = "Data Transformation Stage"
+
+try:
+    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+    config_manager = ConfigurationManager()
+    data_transformation_config = config_manager.get_data_transformation_config()
+    
+    # Pass the configuration to DataTransformation
+    data_transformation = DataTransformation(config=data_transformation_config)
+    data_transformation.train_test_splitting()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+
+except Exception as e:
+    logger.exception(e)
+    raise e
